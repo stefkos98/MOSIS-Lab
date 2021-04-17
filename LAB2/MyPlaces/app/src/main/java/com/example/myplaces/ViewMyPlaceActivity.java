@@ -1,6 +1,5 @@
 package com.example.myplaces;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -10,37 +9,55 @@ import com.google.android.material.snackbar.Snackbar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
+public class ViewMyPlaceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        setContentView(R.layout.activity_view_my_place);
+        Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        int position=-1;
+        try{
+            Intent listIntent=getIntent();
+            Bundle positionBundle=listIntent.getExtras();
+            position=positionBundle.getInt("position");
+            if(position>=0){
+                MyPlace place=MyPlacesData.getInstance().getPlace(position);
+                TextView twName=(TextView)findViewById(R.id.viewmyplace_name_text);
+                twName.setText(place.getName());
+                TextView twDesc=(TextView)findViewById(R.id.viewmyplace_desc_text);
+                twDesc.setText(place.getDesc());
+            }
+        }catch(Exception e){
+            Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        final Button finishedButton=(Button)findViewById(R.id.viewmyplace_finished_button);
+        finishedButton.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                Intent i=new Intent(MainActivity.this,EditMyPlaceActivity.class);
-                startActivityForResult(i,1);
+            public void onClick(View view){
+                finish();
             }
         });
     }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_view_my_place, menu);
         return true;
     }
-    static int NEW_PLACE=1;
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -52,10 +69,6 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.first_setting) {
             Toast.makeText(this,"Show Map!",Toast.LENGTH_LONG).show();
         }
-        if (id == R.id.second_setting) {
-            Intent i=new Intent(this,EditMyPlaceActivity.class);
-            startActivityForResult(i,NEW_PLACE);
-        }
         if (id == R.id.third_setting) {
             Intent i=new Intent(this,MyPlacesList.class);
             startActivity(i);
@@ -64,14 +77,14 @@ public class MainActivity extends AppCompatActivity {
             Intent i=new Intent(this,About.class);
             startActivity(i);
         }
+        if (id == R.id.home) {
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
-
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode == Activity.RESULT_OK) {
-            Toast.makeText(this,"New place added!",Toast.LENGTH_LONG).show();
-        }
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
