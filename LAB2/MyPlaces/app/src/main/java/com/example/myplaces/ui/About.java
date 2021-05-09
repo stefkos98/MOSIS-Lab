@@ -1,9 +1,11 @@
-package com.example.myplaces;
+package com.example.myplaces.ui;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+
+import com.example.myplaces.R;
 
 public class About extends Activity {
     @Override

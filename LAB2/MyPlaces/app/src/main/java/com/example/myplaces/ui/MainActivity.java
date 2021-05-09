@@ -1,11 +1,11 @@
-package com.example.myplaces;
+package com.example.myplaces.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.myplaces.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.first_setting) {
-            Toast.makeText(this,"Show Map!",Toast.LENGTH_LONG).show();
+            Intent i=new Intent(this,MyPlacesMapsActivity.class);
+            startActivity(i);
         }
         if (id == R.id.second_setting) {
             Intent i=new Intent(this,EditMyPlaceActivity.class);

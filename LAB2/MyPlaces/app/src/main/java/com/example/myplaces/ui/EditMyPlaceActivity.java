@@ -1,11 +1,12 @@
-package com.example.myplaces;
+package com.example.myplaces.ui;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.myplaces.R;
+import com.example.myplaces.models.MyPlace;
+import com.example.myplaces.models.MyPlacesData;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -49,7 +50,12 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
             public void afterTextChanged(Editable s) {
                 finishedButon.setEnabled(s.length()>0);
             }
+
+
         });
+
+        Button locationButton = (Button)findViewById(R.id.editmyplace_location_button);
+        locationButton.setOnClickListener(this);
 
         Button cancelButon = (Button)findViewById(R.id.editmyplace_cancel_button);
         cancelButon.setOnClickListener(this);
@@ -71,7 +77,7 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
         }
         else if(position>=0){
             finishedButon.setText("Save");
-            MyPlace place=MyPlacesData.getInstance().getPlace(position);
+            MyPlace place= MyPlacesData.getInstance().getPlace(position);
             nameEditText.setText(place.getName());
             EditText descEditText=(EditText)findViewById(R.id.editmyplace_desc_edit);
             descEditText.setText(place.getDesc());
@@ -86,13 +92,20 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
             case R.id.editmyplace_finished_button: {
             String name=((EditText)findViewById(R.id.editmyplace_name_edit)).getText().toString();
             String desc=((EditText)findViewById(R.id.editmyplace_desc_edit)).getText().toString();
+
+            String lat=((EditText)findViewById(R.id.editmyplace_lat_edit)).getText().toString();
+            String lon=((EditText)findViewById(R.id.editmyplace_lon_edit)).getText().toString();
             if(!editMode){
             MyPlace place=new MyPlace(name,desc);
+            place.setLatitude(lat);
+            place.setLongitude(lon);
             MyPlacesData.getInstance().addNewPlace(place);}
             else{
                 MyPlace place=MyPlacesData.getInstance().getPlace(position);
                 place.setName(name);
                 place.setDecs(desc);
+                place.setLatitude(lat);
+                place.setLongitude(lon);
             }
             setResult(Activity.RESULT_OK);
             finish();
@@ -101,6 +114,12 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
             case R.id.editmyplace_cancel_button: {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
+                break;
+            }
+            case R.id.editmyplace_location_button:{
+                Intent i=new Intent(this, MyPlacesMapsActivity.class);
+                i.putExtra("state",MyPlacesMapsActivity.SELECT_COORDINATES);
+                startActivityForResult(i,1);
                 break;
             }
         }
@@ -123,7 +142,9 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.first_setting) {
-            Toast.makeText(this,"Show Map!",Toast.LENGTH_LONG).show();
+            Intent i=new Intent(this,MyPlacesMapsActivity.class);
+            i.putExtra("state",MyPlacesMapsActivity.SHOW_MAP);
+            startActivity(i);
         }
         if (id == R.id.third_setting) {
             Intent i=new Intent(this,MyPlacesList.class);
@@ -142,5 +163,27 @@ public class EditMyPlaceActivity extends AppCompatActivity implements View.OnCli
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+
+        super.onActivityResult(requestCode,resultCode,data);
+        try {
+            if(resultCode==Activity.RESULT_OK)
+            {
+                String lon=data.getExtras().getString("lon");
+                EditText lonText=(EditText)findViewById(R.id.editmyplace_lon_edit);
+                lonText.setText(lon);
+                String lat=data.getExtras().getString("lat");
+                EditText latText=(EditText)findViewById(R.id.editmyplace_lat_edit);
+                latText.setText(lat);
+            }
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 }

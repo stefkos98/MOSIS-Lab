@@ -3,27 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.example.myplaces.ui.MainActivity">
     <item
-        android:id="@+id/first_setting"
-        android:orderInCategory="1"
-        android:title="@string/first_element"
-        android:icon="@drawable/baseline_map_white_24dp"
-        app:showAsAction="always" />
-    <item
         android:id="@+id/second_setting"
-        android:orderInCategory="2"
+        android:orderInCategory="1"
         android:title="@string/second_element"
         android:icon="@drawable/baseline_add_circle_outline_white_24dp"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/third_setting"
-        android:orderInCategory="3"
-        android:title="@string/third_element"
-        android:icon="@drawable/baseline_format_list_bulleted_white_24dp"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/fourth_setting"
-        android:orderInCategory="4"
+        android:orderInCategory="2"
         android:title="@string/fourth_element"
         android:icon="@drawable/baseline_info_white_24dp"
-        app:showAsAction="never" />
+        app:showAsAction="ifRoom" />
 </menu>

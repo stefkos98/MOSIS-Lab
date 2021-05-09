@@ -1,4 +1,4 @@
-package com.example.myplaces;
+package com.example.myplaces.models;
 
 import java.util.ArrayList;
 

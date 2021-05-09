@@ -1,10 +1,11 @@
-package com.example.myplaces;
+package com.example.myplaces.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
+import com.example.myplaces.R;
+import com.example.myplaces.models.MyPlace;
+import com.example.myplaces.models.MyPlacesData;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -32,11 +33,15 @@ public class ViewMyPlaceActivity extends AppCompatActivity {
             Bundle positionBundle=listIntent.getExtras();
             position=positionBundle.getInt("position");
             if(position>=0){
-                MyPlace place=MyPlacesData.getInstance().getPlace(position);
+                MyPlace place= MyPlacesData.getInstance().getPlace(position);
                 TextView twName=(TextView)findViewById(R.id.viewmyplace_name_text);
                 twName.setText(place.getName());
                 TextView twDesc=(TextView)findViewById(R.id.viewmyplace_desc_text);
                 twDesc.setText(place.getDesc());
+                TextView twLon=(TextView)findViewById(R.id.viewmyplace_lon_text);
+                twLon.setText(place.getLongitude());
+                TextView twLat=(TextView)findViewById(R.id.viewmyplace_lat_text);
+                twLat.setText(place.getLatitude());
             }
         }catch(Exception e){
             Toast.makeText(this,e.getMessage(),Toast.LENGTH_SHORT).show();
@@ -67,7 +72,8 @@ public class ViewMyPlaceActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.first_setting) {
-            Toast.makeText(this,"Show Map!",Toast.LENGTH_LONG).show();
+            Intent i=new Intent(this,MyPlacesMapsActivity.class);
+            startActivity(i);
         }
         if (id == R.id.third_setting) {
             Intent i=new Intent(this,MyPlacesList.class);
