@@ -72,6 +72,17 @@ public class MyPlacesMapsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Listener za promenu liste
+        MyPlacesData.getInstance().setEventListener(new MyPlacesData.ListUpdatedEventListener() {
+            @Override
+            public void onListUpdated() {
+               // showMyPlaces(); // ? ? ?
+                setupMap();
+            }
+        });
+
+        //
         try{
             Intent mapIntent=getIntent();
             Bundle mapBundle=mapIntent.getExtras();
@@ -153,15 +164,13 @@ public class MyPlacesMapsActivity extends AppCompatActivity {
 
     @SuppressLint("MissingPermission")
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permisssions[], int[] grantResults)
-    {
-        switch(requestCode)
-        {
+    public void onRequestPermissionsResult(int requestCode, String permisssions[], int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permisssions, grantResults);
+        switch (requestCode) {
             case PERMISSION_ACCESS_FINE_LOCATION: {
-                if(grantResults.length>0 && grantResults[0]== PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     //setMyLocationOverlay();
-                   // setOnMapClickOverlay();
+                    // setOnMapClickOverlay();
                     setupMap();
                 }
                 return;
@@ -305,7 +314,7 @@ public class MyPlacesMapsActivity extends AppCompatActivity {
         final ArrayList<OverlayItem> overlayArrayList = new ArrayList<>();
         for(int i = 0; i<MyPlacesData.getInstance().getMyPlaces().size();i++){
             MyPlace mp = MyPlacesData.getInstance().getPlace(i);
-            OverlayItem overlayItem = new OverlayItem(mp.getName(),mp.getDesc(),new GeoPoint(Double.parseDouble(mp.getLatitude()),Double.parseDouble(mp.getLongitude())));
+            OverlayItem overlayItem = new OverlayItem(mp.name,mp.description,new GeoPoint(Double.parseDouble(mp.latitude),Double.parseDouble(mp.longitude)));
             overlayItem.setMarker(this.getResources().getDrawable(R.drawable.baseline_myplace));
             overlayArrayList.add(overlayItem);
         }
