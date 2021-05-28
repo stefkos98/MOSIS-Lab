@@ -1,15 +1,20 @@
 package com.example.myplaces.ui;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 
 import com.example.myplaces.R;
 import com.example.myplaces.models.MyPlace;
 import com.example.myplaces.models.MyPlacesData;
+import com.google.firebase.auth.FirebaseAuth;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +23,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class ViewMyPlaceActivity extends AppCompatActivity {
-
+    FirebaseAuth mAuth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        mAuth=FirebaseAuth.getInstance();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_my_place);
         Toolbar toolbar =(Toolbar) findViewById(R.id.toolbar);
@@ -55,6 +61,19 @@ public class ViewMyPlaceActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        /**snip **/
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("com.package.ACTION_LOGOUT");
+        registerReceiver(new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                Log.d("onReceive","Logout in progress");
+                //At this point you should start the login activity and finish this one
+                finish();
+            }
+        }, intentFilter);
+        //** snip **//
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -84,6 +103,19 @@ public class ViewMyPlaceActivity extends AppCompatActivity {
             startActivity(i);
         }
         if (id == R.id.home) {
+            finish();
+        }
+        if(id == R.id.fifth_setting)
+        {
+            //BROADCAST
+            Intent broadcastIntent = new Intent();
+            broadcastIntent.setAction("com.package.ACTION_LOGOUT");
+            sendBroadcast(broadcastIntent);
+            //
+            mAuth.signOut();
+            Intent logoutIntent = new Intent(ViewMyPlaceActivity.this, WelcomeActivity.class);
+            logoutIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(logoutIntent);
             finish();
         }
         return super.onOptionsItemSelected(item);

@@ -5,6 +5,7 @@
     <string name="second_element">New place!</string>
     <string name="third_element">My places!</string>
     <string name="fourth_element">About</string>
+    <string name="fifth_element">Logout</string>
     <string name="about_content">About Text</string>
     <string name="ok">Ok</string>
     <string name="about_text"><i>My places</i> is the application that will help you remember charachteristics and locations of your favorite places. It will be able to show your places
@@ -31,4 +32,6 @@
 
     <string name="hello_first_fragment">Hello first fragment</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="login_label">Login</string>
+    <string name="register_label">Register</string>
 </resources>

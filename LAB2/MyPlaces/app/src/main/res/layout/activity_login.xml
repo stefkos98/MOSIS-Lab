@@ -1,10 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+tools:context="com.example.myplaces.ui.LoginActivity">
 
-  </androidx.constraintlayout.widget.ConstraintLayout>
+<RelativeLayout
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<!--    <ImageView-->
+<!--        android:layout_width="200dp"-->
+<!--        android:layout_height="200dp"-->
+<!--        android:layout_centerInParent="true"-->
+<!--        android:src="@drawable/baseline_myplace" />-->
+  <RelativeLayout
+      android:id="@+id/layoutInputL"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="50dp">
+
+
+    <LinearLayout
+        android:id="@+id/layoutEmailL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true">
+
+      <EditText
+          android:id="@+id/txtEmailL"
+          android:layout_width="250dp"
+          android:layout_height="50dp"
+          android:hint="Email"
+          android:singleLine="true">
+
+      </EditText>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutPasswordL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/layoutEmailL"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true">
+
+      <EditText
+          android:id="@+id/txtPasswordL"
+          android:layout_width="250dp"
+          android:layout_height="50dp"
+          android:hint="Password"
+          android:inputType="textPassword"
+          android:singleLine="true">
+
+      </EditText>
+
+    </LinearLayout>
+
+  </RelativeLayout>
+
+
+  <RelativeLayout
+      android:id="@+id/layoutButtonL"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:layout_marginTop="20dp"
+      android:layout_below="@id/layoutInputL">
+
+    <Button
+        android:id="@+id/btnLoginL"
+        android:layout_width="200dp"
+        android:layout_height="50dp"
+        android:layout_centerInParent="true"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:text="@string/login_label"/>
+
+  </RelativeLayout>
+
+
+</RelativeLayout>
+
+</RelativeLayout>

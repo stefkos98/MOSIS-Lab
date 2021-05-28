@@ -26,4 +26,10 @@
         android:title="@string/fourth_element"
         android:icon="@drawable/baseline_info_white_24dp"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/fifth_setting"
+        android:orderInCategory="5"
+        android:title="@string/fifth_element"
+        android:icon="@drawable/outline_logout_white_24dp"
+        app:showAsAction="never" />
 </menu>
